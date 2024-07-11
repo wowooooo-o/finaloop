@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Favorites</title>
+    <style>
+
+        select {
+            width: 200px;
+            height: 30px;
+            margin-bottom: 20px;
+            margin-left: 350px;
+            margin-top: 10px;
+    
+        }
+        #favorites-list {
+            display: none;
+        }
+
+        body {
+            margin: 0;
+            /* font-family: 'Courier New', Courier, monospace; */
+            background-color: #1c352d;
+            font-family: Arial, sans-serif;
+        }
+
+        .container h1 { 
+            color: white;
+            text-align: center;
+            padding-top: 2%;
+            font-size: 2rem;
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 8px;
+        
+        }
+
+        footer {
+            color: white;
+            width: 93.5rem;
+            text-align: center;
+            padding-top: 450px;
+
+        }
+
+        header {
+            color: white;
+            padding: 20px;
+            width: 93.5rem;
+            text-align: left;
+        }
+
+        header h1 {
+            margin: 0;
+            padding-left: 100px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding-top: 10px;
+            margin-top: 35px;
+            padding-left: 50px;
+        }
+
+        li {
+            display: inline;
+            text-align: right;
+            padding: 1rem;
+        }
+
+        li a {
+            color: #fff;
+            text-decoration: none;
+            text-align: right;
+        }
+
+        nav ul li { 
+            margin: 0;
+            padding: 2px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        li a:hover {
+            color: #000;
+        }
+
+        header h1 img {
+            width: 100px; /* adjust the width and height to your liking */
+            height: 50px;
+            margin: 0 auto; /* center the image horizontally */
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+          <h1 style="padding-right: 150px; padding-top: 30px;">The Velvet Delights</h1>
+          <nav>
+            <ul style="padding-left: 550px; font-size: 20px; padding-top: 5px;">
+              <li><a href="index.html">Meals</a></li>
+              <li><a href="#news">News</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li><a href="#about">About</a></li>
+            </ul>
+          </nav>
+        </div>
+    </header>
+
+    <h1 style="color: #fff; text-align: center; padding-top: 10px;">Saved Favorites</h1>
+    <select id="favorite-category-select">
+        <option value="">Select a category</option>
+        <!-- categories will be populated here -->
+    </select>
+    <select id="favorite-meal-select">
+        <option value="">Select a meal</option>
+        <!-- meals will be populated here -->
+    </select>
+    <div id="favorites-list">
+        <!-- favorite meals will be displayed here -->
+    </div>
+
+    <footer style="text-align: center;">
+        <p>&copy; 2023 The Velvet Delights</p>
+    </footer>
+
+    <script>
+        // Get favorite meals from local storage
+        let favoriteMeals = JSON.parse(localStorage.getItem('favoriteMeals')) || [];
+
+        // Populate favorite categories select
+        const favoriteCategorySelect = document.getElementById('favorite-category-select');
+        const favoriteCategories = [...new Set(favoriteMeals.map(meal => meal.strCategory))];
+        favoriteCategories.forEach(category => {
+            const option = document.createElement('option');
+            option.text = category;
+            option.value = category;
+            favoriteCategorySelect.appendChild(option);
+        });
+
+        // Add event listener to favorite categories select
+        favoriteCategorySelect.addEventListener('change', () => {
+            const category = favoriteCategorySelect.value;
+            const favoriteMealsByCategory = favoriteMeals.filter(meal => meal.strCategory === category);
+            const favoriteMealSelect = document.getElementById('favorite-meal-select');
+            favoriteMealSelect.innerHTML = ''; // clear the select list
+            favoriteMealsByCategory.forEach(meal => {
+                const option = document.createElement('option');
+                option.text = meal.strMeal;
+                option.value = meal.idMeal;
+                favoriteMealSelect.appendChild(option);
+            });
+            displayFavoriteMealDetails(favoriteMealsByCategory[0]);
+        });
+
+        // Add event listener to favorite meals select
+        const favoriteMealSelect = document.getElementById('favorite-meal-select');
+        favoriteMealSelect.addEventListener('change', () => {
+            const mealId = favoriteMealSelect.value;
+            const favoriteMeal = favoriteMeals.find(meal => meal.idMeal === mealId);
+            displayFavoriteMealDetails(favoriteMeal);
+        });
+
+        // Display favorite meal details
+        function displayFavoriteMealDetails(favoriteMeal) {
+            const favoritesList = document.getElementById('favorites-list');
+            favoritesList.innerHTML = '';
+            const mealDetails = document.createElement('div');
+            mealDetails.innerHTML = `
+                <h2>${favoriteMeal.strMeal}</h2>
+                <p>Category: ${favoriteMeal.strCategory}</p>
+                <p>Origin: ${favoriteMeal.strArea}</p>
+                <ul>
+                    ${Array.from({ length: 20 }, (_, i) => {
+                        const ingredient = `strIngredient${i + 1}`;
+                        const measure = `strMeasure${i + 1}`;
+                        if (favoriteMeal[ingredient] && favoriteMeal[measure]) {
+                            return `<li>${favoriteMeal[ingredient]} - ${favoriteMeal[measure]}</li>`;
+                        }
+                    }).join('')}
+                </ul>
+                <p><a href="${favoriteMeal.strYoutube}" target="_blank">View recipe</a></p>
+                <p>Comments: ${favoriteMeal.comments || ''}</p>
+                <input type="text" id="comment-input" placeholder="Add a comment...">
+                <button id="add-comment-btn">Add Comment</button>
+                <button id="delete-meal-btn">Delete Meal</button>
+            `;
+            favoritesList.appendChild(mealDetails);
+            favoritesList.style.display = 'block';
+
+            // Add event listener to add comment button
+            const addCommentBtn = document.getElementById('add-comment-btn');
+            addCommentBtn.addEventListener('click', () => {
+                const commentInput = document.getElementById('comment-input');
+                const comment = commentInput.value.trim();
+                if (comment) {
+                    favoriteMeal.comments = (favoriteMeal.comments || '') + `\n${comment}`;
+                    localStorage.setItem('favoriteMeals', JSON.stringify(favoriteMeals));
+                    commentInput.value = '';
+                    displayFavoriteMealDetails(favoriteMeal);
+                }
+            });
+            // Add event listener to delete meal button
+            const deleteMealBtn = document.getElementById('delete-meal-btn');
+            deleteMealBtn.addEventListener('click', () => {
+                const mealId = favoriteMeal.idMeal;
+                    favoriteMeals = favoriteMeals.filter(meal => meal.idMeal !== mealId);
+                    localStorage.setItem('favoriteMeals', JSON.stringify(favoriteMeals));
+                    favoritesList.style.display = 'none';
+                    favoriteMealSelect.innerHTML = ''; // clear the select list
+                    favoriteCategorySelect.value = ''; // reset category select
+                });
+            }
+    </script>
+</body>
+</html>

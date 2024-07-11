@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World!</title>
+  <link rel="stylesheet" href="index.css" />
+
+  <script src="meals.js"> </script>
+
+</head>
+
+<body>
+
+  <select name="CategorySelect" id="CategorySelect">
+    <option value="Choose food category">Choose food category</option>
+    <option value="Beef">Beef</option>
+    <option value="Breakfast">Breakfast</option>
+    <option value="Chicken">Chicken</option>
+    <option value="Dessert">Dessert</option>
+    <option value="Beef">Beef</option>
+    <option value="Goat">Goat</option>
+    <option value="Lamb">Lamb</option>
+    <option value="Miscellaneous">Miscellaneous</option>
+    <option value="Pasta">Pasta</option>
+    <option value="Pork">Pork</option>
+    <option value="Seafood">Seafood</option>
+    <option value="Side">Side</option>
+    <option value="Starter">Starter</option>
+    <option value="Vegan">Vegan</option>
+    <option value="Vegetarian">Vegetarian</option>
+  </select>
+
+  <br>
+  <br>
+  
+  <select id="mealSelect"></select>
+
+
+  <p>Click the button below for a meal of the day</p>
+
+  <button onclick="buttonClicked1()">Enter</button>
+
+  <button onclick="buttonClicked2()">Enter</button>
+
+  <div id="meal-details">
+    <h2 id="meal-name"></h2>
+    <p id="meal-origin"></p>
+    <ul id="meal-ingredients"></ul>
+    <p id="meal-instructions"></p>
+    <p id="meal-url"></p>
+    <!-- <button id="favorite-button">Add to Favorites</button> -->
+  </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World!</title>
+    <link rel="stylesheet" href="index.css" />
+    <script src="meals.js"></script>
+
+    <style>
+    
+      body {
+        margin: 0;
+        font-family: cursive;
+        background-color: #1c352d;
+        
+      }
+  
+      .container h1 { 
+        color: white;
+        text-align: center;
+        padding-top: 2%;
+        font-size: 2rem;
+      }
+  
+      /* Add styles for the image */
+     .image {
+        display:flex;
+        margin: 0 auto;
+        width: 80%; 
+        
+      }
+  
+      .flex-container {
+        display: flex;
+        justify-content: center; /* add this to center the images */
+        padding-top: 8px;
+        
+      }
+  
+      footer {
+        color: white;
+        width: 93.5rem;
+        text-align: center;
+        padding-top: 250px;
+  
+      }
+  
+      header {
+        color: white;
+        padding: 20px;
+        width: 93.5rem;
+        text-align: left;
+      }
+  
+      header h1 {
+        margin: 0;
+        padding-left: 20px;
+      }
+  
+      .container {
+        display: flex;
+      }
+  
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding-top: 10px;
+        margin-top: 35px;
+        padding-left: 50px;
+      }
+  
+      li {
+        display: inline;
+        text-align: right;
+        padding: 1rem;
+      }
+  
+      li a {
+        color: #fff;
+        text-decoration: none;
+        text-align: right;
+      }
+  
+      nav ul li { 
+        margin: 0;
+        padding: 2px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+  
+      li a:hover {
+        color: #000;
+      }
+  
+      header h1 img {
+        width: 100px; /* adjust the width and height to your liking */
+        height: 50px;
+        margin: 0 auto; /* center the image horizontally */
+      }
+
+      .meal-category {
+        text-align: center;
+      }
+
+      .meal-category select {
+        display: block;
+        margin: 0 auto;
+      }
+
+      .category {
+        text-align: center;
+      }
+      
+    </style>
+    
+  </head>
+  <body>
+
+    <header>
+      <div class="container">
+        <h1 style="padding-right: 150px; padding-top: 30px;">The Velvet Delights</h1>
+        <nav>
+          <ul style="padding-left: 750px; font-size: 20px; padding-top: 5px;">
+            <li><a href="homepage.html">Meals</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#about">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+  
+    <br>
+
+    <h1 style="color: #fff; text-align: center;">Meal Category</h1>
+    <div style="text-align: center;">
+      <select id="category-select" name="category">
+        <option value="">Select a category</option>
+        <!-- categories will be populated here -->
+      </select>
+      <select id="meal-select">
+        <option value="">Select a meal</option>
+        <!-- meals will be populated here -->
+      </select>
+      <div id="meal-details" style="text-align: center;">
+        <h2 id="meal-name"></h2>
+        <p id="meal-origin"></p>
+        <ul id="meal-ingredients"></ul>
+        <p id="meal-instructions"></p>
+        <p id="meal-url"></p>
+        <button id="favorite-button" disabled>Add to Favorites</button>
+        <a href="savefav.html">SAVE FAVORITES</a>
+      </div>
+    </div>
+
+    <script src="meals.js"></script>
+    
+    <footer>
+      <p>&copy; 2023 The Velvet Delights</p>
+    </footer>
+    
+  </body>
+</html>
